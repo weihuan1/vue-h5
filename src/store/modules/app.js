@@ -1,12 +1,15 @@
-const state = {}
+const app = {
+  state: {
+    tabbar: 'mine'
+  },
 
-const mutations = {}
+  mutations: {
+    TOGGLE_TABBAR: (state, name) => {
+      state.tabbar = name
+    }
+  },
 
-const actions = {}
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
+  actions: {}
 }
+
+export default app

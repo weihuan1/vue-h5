@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import '@/assets/css/index.scss' // global css
+
+// vant ui
+import Vant from 'vant/lib'
+import 'vant/lib/index.css'
 // 移动端适配
 import 'lib-flexible/flexible.js'
 import App from './App'
@@ -19,6 +23,7 @@ if ('addEventListener' in document) {
     false
   )
 }
+Vue.use(Vant)
 Vue.config.productionTip = false
 new Vue({
   el: '#app',

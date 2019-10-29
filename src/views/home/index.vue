@@ -1,4 +1,3 @@
-<!-- home -->
 <template lang="pug">
   .home
     p 首页
@@ -7,25 +6,26 @@
 
 <script>
 // import { api } from '@/config'
-import {
-  Button
-} from 'vant'
+import { mapMutations } from 'vuex'
 export default {
-  components: {
-    'van-button': Button
-  },
-
+  name: 'home',
   data () {
     return {}
   },
 
   computed: {},
 
+  created () {
+    this.TOGGLE_TABBAR('home')
+  },
+
   mounted () {
     console.log(process.env)
   },
 
-  methods: {}
+  methods: {
+    ...mapMutations(['TOGGLE_TABBAR'])
+  }
 }
 
 </script>

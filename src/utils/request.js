@@ -8,7 +8,7 @@ const service = axios.create({
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-
+Toast.setDefaultOptions({ duration: 5000 })
 // request拦截器 request interceptor
 service.interceptors.request.use(
   config => {
@@ -42,6 +42,7 @@ service.interceptors.response.use(
           location.reload()
         })
       }
+      Toast(res.msg || '出错了!')
       return Promise.reject(res || 'error')
     } else {
       return Promise.resolve(res)
@@ -49,6 +50,7 @@ service.interceptors.response.use(
   },
   error => {
     Toast.clear()
+    Toast('请求异常!')
     console.log('err' + error) // for debug
     return Promise.reject(error)
   }
