@@ -1,21 +1,67 @@
 <template lang='pug'>
   .info
-    p 个人资料
+    van-nav-bar(
+      title="个人资料"
+      left-arrow
+      :border="false"
+      @click-left="$router.back()"
+    )
+    .header
+      van-image(
+        round
+        width="70px"
+        height="70px"
+        :src="userinfo.avatar || avatar"
+        @click="$router.push('/userInfo')"
+      )
+      van-uploader.uploader(:after-read="afterRead")
+    van-cell-group
+      van-cell(title="用户名" :value="userinfo.username || '暂无'")
+      van-cell(title="昵称" :value="userinfo.nickname || '未设置'" is-link to="/revise/nickname")
+      van-cell(title="联系电话" :value="userinfo.phone || '未设置'" is-link to="/revise/phone")
 </template>
 
 <script>
+import avatar from '@/assets/images/avatar.png'
+import { mapGetters } from 'vuex'
 export default {
   name: 'info',
   data () {
-    return {}
+    return {
+      avatar
+    }
+  },
+  computed: {
+    ...mapGetters(['userinfo'])
   },
   created () {},
-  methods: {}
+  methods: {
+    afterRead (file) {
+      console.log(file)
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 .info{
-  padding: 0
+  .header{
+    text-align: center;
+    background-color: #fff;
+    padding: 20px 0;
+    position: relative;
+    .uploader{
+      position: absolute;
+      display: inline-block;
+      width: 70px;
+      height: 70px;
+      border-radius: 100%;
+      overflow: hidden;
+      background-color: transparent;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+  }
 }
 </style>

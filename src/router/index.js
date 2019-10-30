@@ -54,10 +54,20 @@ export const constantRoutes = [
   },
   {
     path: '/userInfo',
+    name: 'userInfo',
     component: () => import('@/views/mine/info'),
     meta: {
-      title: '个人资料',
-      login: true
+      title: '个人资料'
+      // login: true
+    }
+  },
+  {
+    path: '/revise/:type',
+    name: 'revise',
+    component: () => import('@/views/mine/revise'),
+    meta: {
+      title: '个人资料'
+      // login: true
     }
   }
 ]
