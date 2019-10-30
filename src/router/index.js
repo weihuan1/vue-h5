@@ -51,6 +51,14 @@ export const constantRoutes = [
     meta: {
       title: '登录'
     }
+  },
+  {
+    path: '/userInfo',
+    component: () => import('@/views/mine/info'),
+    meta: {
+      title: '个人资料',
+      login: true
+    }
   }
 ]
 

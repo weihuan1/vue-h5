@@ -5,6 +5,10 @@ import '@/assets/css/index.scss' // global css
 // vant ui
 import Vant from 'vant/lib'
 import 'vant/lib/index.css'
+
+// 公共components
+import xtUi from './components'
+
 // 移动端适配
 import 'lib-flexible/flexible.js'
 import App from './App'
@@ -24,6 +28,7 @@ if ('addEventListener' in document) {
   )
 }
 Vue.use(Vant)
+Vue.use(xtUi)
 Vue.config.productionTip = false
 new Vue({
   el: '#app',

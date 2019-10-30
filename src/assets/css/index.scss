@@ -38,6 +38,9 @@ html {
   box-sizing: border-box;
 }
 
+html, body {
+  background-color: #f5f5f5;
+}
 #app {
   height: 100%;
 }
@@ -80,8 +83,25 @@ div:focus {
 .app-container {
   padding: 20px;
 }
-
+// nprogress 样式
+#nprogress .spinner{
+  display: none !important;
+}
 // 重置vant css
 .van-tabbar--fixed{
   position: fixed !important;
+}
+
+// 自定义class
+.mar_t {
+  margin-top: 8px;
+}
+.mar_l {
+  margin-left: 8px;
+}
+.mar_r {
+  margin-right: 8px;
+}
+.mar_b {
+  margin-bottom: 8px;
 }

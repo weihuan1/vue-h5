@@ -134,6 +134,7 @@ export default {
   overflow: hidden;
   background: url('../../assets/images/login_bg.jpg') no-repeat top center;
   background-size: 100%;
+  background-color: #fff;
   /deep/ .van-tabs__nav{
     background-color: transparent;
     .van-ellipsis{
