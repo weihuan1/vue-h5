@@ -12,7 +12,7 @@
         van-swipe(indicator-color="#fc7b53" style="width: 100%")
           van-swipe-item(v-for="(item, index) in swipeData" :key="index")
             .content(style="padding-bottom: 24px;")
-              .card_item(v-for="(list, ind) in item" :key="ind" @click="clickHandle(list)" :style="{ width: 100 / length + '%' }")
+              .card_item(v-for="(list, ind) in item" :key="ind" @click="clickHandle(list, $event)" :style="{ width: 100 / length + '%' }")
                 span.iconfont(:class="list.icon")
                 span.name {{ list.name }}
 </template>
@@ -42,7 +42,7 @@ export default {
     }
   },
   methods: {
-    clickHandle (item) {
+    clickHandle (item, e) {
       this.$emit('click', item)
     }
   }

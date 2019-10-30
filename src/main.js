@@ -22,6 +22,14 @@ if ('addEventListener' in document) {
   document.addEventListener(
     'DOMContentLoaded',
     function () {
+      FastClick.prototype.onTouchMove = function (event) {
+        event.stopPropagation()
+        event.cancelBubble = true
+      }
+      FastClick.prototype.onTouchEnd = function (event) {
+        event.stopPropagation()
+        event.cancelBubble = true
+      }
       FastClick.attach(document.body)
     },
     false
