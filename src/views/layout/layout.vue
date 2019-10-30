@@ -30,6 +30,6 @@ export default {
 
 <style scoped lang="scss">
 .app-wrapper{
-  padding-bottom: 50px
+  padding-bottom: 60px
 }
 </style>
