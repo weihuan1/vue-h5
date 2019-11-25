@@ -89,7 +89,7 @@ export default {
       }
     }
   }
-  /deep/ .van-swipe__indicator{
+  ::v-deep .van-swipe__indicator{
     width: 8px;
     height: 8px;
   }

@@ -23,7 +23,8 @@ export const constantRoutes = [
         name: 'search',
         component: () => import('@/views/search/index'),
         meta: {
-          title: '搜索'
+          title: '搜索',
+          login: true
         }
       },
       {
@@ -31,7 +32,6 @@ export const constantRoutes = [
         name: 'order',
         component: () => import('@/views/order/index'),
         meta: {
-          login: true,
           title: '订单'
         }
       },
@@ -57,8 +57,8 @@ export const constantRoutes = [
     name: 'userInfo',
     component: () => import('@/views/mine/info'),
     meta: {
-      title: '个人资料'
-      // login: true
+      title: '个人资料',
+      login: true
     }
   },
   {

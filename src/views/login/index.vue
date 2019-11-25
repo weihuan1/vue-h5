@@ -135,24 +135,24 @@ export default {
   background: url('../../assets/images/login_bg.jpg') no-repeat top center;
   background-size: 100%;
   background-color: #fff;
-  /deep/ .van-tabs__nav{
+  ::v-deep .van-tabs__nav{
     background-color: transparent;
     .van-ellipsis{
       font-size: 16px;
     }
   }
-  /deep/ .van-tabs__wrap{
+  ::v-deep .van-tabs__wrap{
     &:after {
       display: none;
     }
   }
-  /deep/ .van-cell-group{
+  ::v-deep .van-cell-group{
     &:after {
       border-top: none;
       margin-left: 20px;
     }
   }
-  /deep/ .van-field__left-icon .van-icon{
+  ::v-deep .van-field__left-icon .van-icon{
     font-size: 19px;
     color: #666;
   }

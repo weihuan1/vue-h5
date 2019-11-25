@@ -20,7 +20,7 @@ export default {
     return {
       title: '重置',
       nickname: '',
-      phone: '',
+      phone: ''
     }
   },
   computed: {

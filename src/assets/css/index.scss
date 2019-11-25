@@ -1,4 +1,3 @@
-@import './variables.scss';
 @import './mixin.scss';
 
 body {
@@ -93,6 +92,12 @@ div:focus {
 }
 
 // 自定义class
+.empty_tips {
+  text-align: center;
+  color: #999;
+  margin-top: 40px;
+  width: 100%;
+}
 .mar_t {
   margin-top: 8px;
 }
