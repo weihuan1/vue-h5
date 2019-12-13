@@ -7,7 +7,7 @@
           width="50px"
           height="50px"
           :src="avatar"
-          @click="$router.push('/userInfo')"
+          @click.native="$router.push('/userInfo')"
         )
         .header_main
           .name {{ token ? userinfo.name : '欢迎回来' }}
@@ -39,7 +39,7 @@
 
 <script>
 import avatar from '@/assets/images/avatar.png'
-import { mapMutations, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'mine',
   data () {
@@ -96,11 +96,8 @@ export default {
   computed: {
     ...mapGetters(['token', 'userinfo'])
   },
-  created () {
-    this.TOGGLE_TABBAR('mine')
-  },
+  created () {},
   methods: {
-    ...mapMutations(['TOGGLE_TABBAR']),
     clickHandle (row) {
       console.log(row)
     }

@@ -90,7 +90,9 @@ div:focus {
 .van-tabbar--fixed{
   position: fixed !important;
 }
-
+.van-pull-refresh .van-list{
+  min-height: 80vh;
+}
 // 自定义class
 .empty_tips {
   text-align: center;

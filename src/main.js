@@ -4,7 +4,7 @@ import '@/assets/css/index.scss' // global css
 
 // vant ui
 import Vant from 'vant/lib'
-import 'vant/lib/index.css'
+Vue.use(Vant)
 
 // 公共components
 import xtUi from './components'
@@ -18,9 +18,10 @@ import store from './store'
 
 import '@/filters' // filters
 import '@/permission' // permission 权限
+import api from '@/api'
 
-Vue.use(Vant)
 Vue.use(xtUi)
+Vue.prototype.$api = api
 Vue.config.productionTip = false
 
 new Vue({
@@ -28,3 +29,6 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+// 解决打包后样式顺序错乱问题
+import 'vant/lib/index.css'

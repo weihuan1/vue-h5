@@ -13,10 +13,21 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: false,
+    open: true,
     overlay: {
       warnings: false,
       errors: true
+    },
+    proxy: {
+      // change xxx-api/login => mock/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      '/api': {
+        target: `http://yapi.demo.qunar.com/mock/56700`,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
     }
   },
 

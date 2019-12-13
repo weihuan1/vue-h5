@@ -7,7 +7,6 @@
 }
 
 @mixin scrollBar {
-  -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar-track-piece {
     background: #d3dce6;
   }

@@ -27,7 +27,7 @@
             @click-right-icon="showPassword = !showPassword"
           )
         .login_btn
-          van-button(type="primary" block :hairline="false" :disabled="username.length < 3 || password.length < 6" @click="loginHandle(1)") 登录
+          van-button(type="primary" block :loading="loading" loading-text="登录中..." :hairline="false" :disabled="username.length < 3 || password.length < 6 || loading" @click="loginHandle(1)") 登录
         .tips_wrap
           span
           span 忘记密码
@@ -51,7 +51,7 @@
           )
             van-button(slot="button" size="small" type="primary" :disabled="phone.length !== 11 || sendNumber < 61" @click="sendHandle") {{ sendText }}
         .login_btn
-          van-button(type="primary" block :hairline="false" :disabled="phone.length !== 11 || identCode.length !== 6" @click="loginHandle(2)") 登录
+          van-button(type="primary" :loading="loading" loading-text="登录中..." block :hairline="false" :disabled="phone.length !== 11 || identCode.length !== 6 || loading" @click="loginHandle(2)") 登录
         .tips_wrap
           span 未注册手机，将自动为您创建一个**账户
     .insert_wrap
@@ -74,7 +74,8 @@ export default {
       hasSend: false,
       sendNumber: 61,
       loading: false,
-      timer: undefined
+      timer: undefined,
+      redirect: undefined
     }
   },
   computed: {
@@ -86,11 +87,18 @@ export default {
       }
     }
   },
+  watch: {
+    $route: {
+      handler: function (route) {
+        this.redirect = route.query && route.query.redirect
+      },
+      immediate: true
+    }
+  },
   created () {},
   methods: {
     loginHandle (type) {
-      console.log(type)
-      const params = {}
+      const params = { type }
       if (type === 1) {
         params.username = this.username
         params.password = this.password
@@ -101,13 +109,12 @@ export default {
       this.loading = true
       this.$store.dispatch('Login', params).then(() => {
         this.loading = false
-        this.$router.push({ path: this.redirect || '/' })
+        this.$router.replace({ path: this.redirect || '/' })
       }).catch(() => {
         this.loading = false
       })
     },
     sendHandle () {
-      console.log('发送验证码!')
       this.countdown()
       this.hasSend = true
     },

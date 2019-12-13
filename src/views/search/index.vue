@@ -1,21 +1,18 @@
 <template lang='pug'>
   .search
-    p 搜索
+    <van-search placeholder="请输入搜索关键词" v-model="value" />
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 export default {
   name: 'search',
   data () {
-    return {}
+    return {
+      value: ''
+    }
   },
-  created () {
-    this.TOGGLE_TABBAR('search')
-  },
-  methods: {
-    ...mapMutations(['TOGGLE_TABBAR'])
-  }
+  created () {},
+  methods: {}
 }
 </script>
 

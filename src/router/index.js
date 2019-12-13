@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
 
 Vue.use(Router)
 import Layout from '../views/layout/layout'
@@ -16,6 +17,10 @@ export const constantRoutes = [
         meta: {
           keepAlive: false,
           title: '首页'
+        },
+        beforeEnter: (to, from, next) => {
+          store.commit('TOGGLE_TABBAR', 'home')
+          next()
         }
       },
       {
@@ -25,6 +30,10 @@ export const constantRoutes = [
         meta: {
           title: '搜索',
           login: true
+        },
+        beforeEnter: (to, from, next) => {
+          store.commit('TOGGLE_TABBAR', 'search')
+          next()
         }
       },
       {
@@ -32,7 +41,13 @@ export const constantRoutes = [
         name: 'order',
         component: () => import('@/views/order/index'),
         meta: {
-          title: '订单'
+          title: '订单',
+          useCache: true,
+          keepAlive: true
+        },
+        beforeEnter: (to, from, next) => {
+          store.commit('TOGGLE_TABBAR', 'order')
+          next()
         }
       },
       {
@@ -41,6 +56,10 @@ export const constantRoutes = [
         component: () => import('@/views/mine/index'),
         meta: {
           title: '我的'
+        },
+        beforeEnter: (to, from, next) => {
+          store.commit('TOGGLE_TABBAR', 'mine')
+          next()
         }
       }
     ]
@@ -59,6 +78,14 @@ export const constantRoutes = [
     meta: {
       title: '个人资料',
       login: true
+    }
+  },
+  {
+    path: '/orderDetail/:id',
+    name: 'orderDetail',
+    component: () => import('@/views/order/order-detail'),
+    meta: {
+      title: '订单详情'
     }
   },
   {

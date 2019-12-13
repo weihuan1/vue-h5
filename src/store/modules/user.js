@@ -9,6 +9,9 @@ const user = {
   mutations: {
     SET_USEINFO: (state, userinfo) => {
       state.userinfo = userinfo
+    },
+    SET_TOKEN: (state, token) => {
+      state.token = token
     }
   },
 
@@ -18,8 +21,8 @@ const user = {
       return new Promise((resolve, reject) => {
         login(params).then(response => {
           const data = response.result
-          setToken(data.access_token)
-          commit('SET_TOKEN', data.access_token)
+          setToken(data.token)
+          commit('SET_TOKEN', data.token)
           resolve()
         }).catch(error => {
           reject(error)

@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .app-wrapper{
   padding-bottom: 60px
 }

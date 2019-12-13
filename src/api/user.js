@@ -19,3 +19,11 @@ export function getInfo (data) {
     data
   })
 }
+// 上传照片
+export function uploadPhoto (data) {
+  return request({
+    url: '/upload',
+    method: 'post',
+    data
+  })
+}

@@ -58,7 +58,7 @@ export default {
       this.showPopup = false
       this.$emit('cancel')
     }
-  },
+  }
 }
 </script>
 

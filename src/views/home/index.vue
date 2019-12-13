@@ -10,69 +10,64 @@
       @cancel="time = ''"
       @confirm="confirmHandle"
     )
-    .content
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
-      .list 列表
+    van-uploader(
+      v-model="fileList"
+      preview-size="70px"
+      multiple
+      :after-read="afterRead"
+    )
     .empty_tips 暂无数据!
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 export default {
   name: 'home',
   data () {
     return {
-      time: ''
+      time: '',
+      fileList: []
     }
   },
   computed: {},
-
-  created () {
-    this.TOGGLE_TABBAR('home')
-  },
-
-  mounted () {
-    console.log(process.env)
-    this.$toast('全局弹窗')
-  },
-
+  created () {},
   methods: {
-    ...mapMutations(['TOGGLE_TABBAR']),
     confirmHandle (value) {
       this.time = value
+    },
+    // 批量上传文件
+    afterRead (file) {
+      let fileArr
+      if (Object.prototype.toString.call(file) === '[object Array]') {
+        fileArr = file
+      } else {
+        fileArr = [file]
+      }
+      this.$toast.loading()
+      let promiseAll = []
+      fileArr.forEach(item => {
+        let param = new FormData()
+        param.append('file', item.file)
+        promiseAll.push(this.$api.uploadPhoto(param).then(res => {
+          for (let i in res.result) {
+            item[i] = res.result[i]
+          }
+          this.$toast.clear()
+        }).catch(() => {
+          let index = this.fileList.indexOf(item)
+          if (index > -1) {
+            this.fileList.splice(index, 1)
+          }
+        }))
+      })
+      Promise.all(promiseAll).then(res => {
+        this.$toast.clear()
+        console.log(this.fileList)
+      })
     }
   }
 }
 
 </script>
 <style lang='scss' scoped>
-.home{
-  .content{
-    height: 300px;
-    overflow-y: auto;
-    @include scrollBar;
-    .list{
-      height: 120px;
-      line-height: 120px;
-    }
-  }
-}
+.home{}
 </style>
