@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import { Toast, Dialog } from 'vant'
+import { getToken } from '@/utils/auth'
 // import { api } from '@/config'
 // create an axios instance
 
@@ -16,7 +17,7 @@ Dialog.setDefaultOptions({ 'closeOnPopstate': true })
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = ''
+      config.headers['X-Token'] = getToken()
     }
     return config
   },

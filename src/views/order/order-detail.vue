@@ -9,7 +9,8 @@
     )
     p.item 订单名称：{{ row.name }}
     p.item 订单时间：{{ row.time }}
-    van-button(type="primary" @click="clickHandle") 返回并且刷新数据
+    van-button(type="primary" block @click="clickHandle") 返回并且刷新数据
+    van-button(type="primary" style="margin-top:10px;" block to="/userInfo") 前往其他页面
 </template>
 
 <script>

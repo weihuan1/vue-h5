@@ -14,7 +14,6 @@
       v-model="fileList"
       preview-size="70px"
       multiple
-      :after-read="afterRead"
     )
     .empty_tips 暂无数据!
 </template>
