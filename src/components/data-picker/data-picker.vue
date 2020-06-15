@@ -1,5 +1,5 @@
 <template lang='pug'>
-  van-popup.data-picker(v-model="showPopup" position="bottom")
+  van-popup.data-picker(v-model="showPopup" position="bottom" get-container="body")
     van-datetime-picker(
       v-model="currentDate"
       v-bind="$attrs"

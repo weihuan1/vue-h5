@@ -2,6 +2,14 @@
   .home
     p 首页
     van-button(type="primary") 主要按钮
+    xt-select(
+      ref="select1"
+      title="单项选择"
+      :options="options"
+      multiple
+      collapse-tags
+      v-model="selectValue"
+    )
     van-cell(title="选择时间" is-link :value="time" @click="$refs.dataPicker.show(time)")
     data-picker(
       ref="dataPicker"
@@ -24,11 +32,16 @@ export default {
   data () {
     return {
       time: '',
-      fileList: []
+      selectValue: '',
+      fileList: [],
+      options: [
+        { label: '选项一', value: '111' },
+        { label: '选项二', value: '222' },
+        { label: '选项三', value: '333' },
+        { label: '选项四', value: '444' }
+      ]
     }
   },
-  computed: {},
-  created () {},
   methods: {
     confirmHandle (value) {
       this.time = value

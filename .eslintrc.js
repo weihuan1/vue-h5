@@ -29,6 +29,9 @@ module.exports = {
     'vue/name-property-casing': 'off',
     'vue/no-v-html': 'off',
     'accessor-pairs': 2,
+    'vue/html-indent': 'off',
+    'vue/attributes-order': 'off',
+    'vue/max-attributes-per-line': 'off',
     'arrow-spacing': [
       2,
       {
