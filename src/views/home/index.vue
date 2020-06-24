@@ -4,7 +4,7 @@
     van-button(type="primary") 主要按钮
     xt-select(
       ref="select1"
-      title="单项选择"
+      title="多选"
       :options="options"
       multiple
       collapse-tags

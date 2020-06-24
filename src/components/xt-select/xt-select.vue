@@ -1,6 +1,6 @@
 <template>
   <div class="xt-select">
-    <van-cell title="单项选择" v-bind="$attrs" :is-link="!readonly" @click="clickHandle">
+    <van-cell :title="title" v-bind="$attrs" :is-link="!readonly" @click="clickHandle">
       <div class="value_wrap" v-if="multiple">
         <div class="value_list van-hairline--surround"
           v-for="(list, index) in selectLabel"
@@ -19,7 +19,7 @@
       closeable
       round
     >
-      <div class="popup_main">
+      <div class="popup_main" :style="{paddingBottom: showFooter ? '50px' : '0' }">
         <div class="title">{{ title }}</div>
         <div class="popup_content">
           <div class="empty_tips" v-if="options.length === 0">暂无数据!</div>
@@ -29,6 +29,10 @@
             :class="computedActive(list)"
             @click="ckeckHandle(list)"
           >{{ list.label }}</div>
+        </div>
+        <div class="filter_footer" v-show="showFooter">
+          <div class="button cancle van-hairline--top" @click="showPopup = false">取消</div>
+          <div class="button confirm" @click="showPopup = false">确定</div>
         </div>
       </div>
     </van-popup>
@@ -40,7 +44,7 @@ export default {
   name: 'xt-select',
   data () {
     return {
-      showPopup: true
+      showPopup: false
     }
   },
   computed: {
@@ -82,6 +86,10 @@ export default {
     collapseTags: {
       type: Boolean,
       default: false
+    },
+    showFooter: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -113,13 +121,6 @@ export default {
         return this.value.includes(list.value) ? 'active' : ''
       } else {
         return this.value === list.value ? 'active' : ''
-      }
-    },
-    async confirmHandle () {
-      let selectArr = this.relatedArr.filter(list => list.select)
-      if (selectArr.length === 0) {
-        this.$toast('请至少选中一项')
-        return false
       }
     }
   }
@@ -159,6 +160,30 @@ export default {
     display: flex;
     flex-wrap: wrap;
     min-height: 100px;
+  }
+  .filter_footer{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+    .button {
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      font-size: 17px;
+      flex: 1;
+      &.cancle{
+        color: #2878FF;
+        background-color: #fff;
+      }
+      &.confirm{
+        color: #fff;
+        background-color: #2878FF;
+      }
+    }
   }
   ::v-deep .van-field__input--textarea{
     color: #666;
