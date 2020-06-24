@@ -42,26 +42,6 @@
 <script>
 export default {
   name: 'xt-select',
-  data () {
-    return {
-      showPopup: false
-    }
-  },
-  computed: {
-    selectLabel () {
-      if (this.multiple) {
-        let arr = this.options.filter(item => this.value.includes(item.value))
-        return arr
-      } else {
-        if (this.value) {
-          let row = this.options.find(item => item.value === this.value)
-          return row.label
-        } else {
-          return ''
-        }
-      }
-    }
-  },
   props: {
     value: {
       type: [String, Array],
@@ -90,6 +70,26 @@ export default {
     showFooter: {
       type: Boolean,
       default: false
+    }
+  },
+  data () {
+    return {
+      showPopup: false
+    }
+  },
+  computed: {
+    selectLabel () {
+      if (this.multiple) {
+        let arr = this.options.filter(item => this.value.includes(item.value))
+        return arr
+      } else {
+        if (this.value) {
+          let row = this.options.find(item => item.value === this.value)
+          return row.label
+        } else {
+          return ''
+        }
+      }
     }
   },
   methods: {

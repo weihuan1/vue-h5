@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const pxtorem = require('postcss-pxtorem')
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
@@ -38,6 +39,22 @@ module.exports = {
     // if (process.env.NODE_ENV === 'development') {}
   },
   chainWebpack (config) {
+    // 单独配置mand-mobile 组件库pxtorem处理
+    config.module
+      .rule('md-postcss')  // 新增规则，规则名自定义
+      .test(/mand-mobile.*\.css$/)  // 用正则表达式匹配mand-mobile的组件目录下的所有css文件
+      .use('css-loader')  // css加载器
+      .loader('postcss-loader')  // css处理器
+      .options({  // 这里的内容跟方法一中css.loaderOptions一样
+        plugins: [
+          pxtorem({
+            rootValue: 75,
+            minPixelValue: 2,
+            propList: ['*'],
+            selectorBlackList: []
+          })
+        ]
+      })
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
     // alias

@@ -1,7 +1,7 @@
 <template lang="pug">
   .home
     p 首页
-    van-button(type="primary") 主要按钮
+    van-button(type="primary" @click="isSelectorShow = true") 使用mand-mobile组件
     xt-select(
       ref="select1"
       title="多选"
@@ -23,14 +23,31 @@
       preview-size="70px"
       multiple
     )
+    md-selector(
+      v-model="isSelectorShow"
+      :data="selectoption"
+      title="Check模式"
+      min-height="320px"
+      okText="确认"
+      cancelText="取消"
+      large-radius
+      @confirm="onSelectorConfirm"
+      is-check
+    )
     .empty_tips 暂无数据!
 </template>
 
 <script>
+import Selector from 'mand-mobile/lib/selector'
+
 export default {
   name: 'home',
+  components: {
+    'md-selector': Selector
+  },
   data () {
     return {
+      isSelectorShow: true,
       time: '',
       selectValue: '',
       fileList: [],
@@ -39,10 +56,32 @@ export default {
         { label: '选项二', value: '222' },
         { label: '选项三', value: '333' },
         { label: '选项四', value: '444' }
+      ],
+      selectoption: [
+        {
+          value: '1',
+          text: '选项一'
+        },
+        {
+          value: '2',
+          text: '选项二'
+        },
+        {
+          value: '3',
+          text: '选项三',
+          disabled: true
+        },
+        {
+          value: '4',
+          text: '选项四'
+        }
       ]
     }
   },
   methods: {
+    onSelectorConfirm (e) {
+      console.log(e)
+    },
     confirmHandle (value) {
       this.time = value
     },
