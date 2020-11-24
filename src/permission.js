@@ -1,5 +1,5 @@
 import router from './router'
-// import store from './store'
+import store from './store'
 import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { getToken } from '@/utils/auth' // 验权
@@ -14,7 +14,17 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.login && !getToken()) {
       next(`/login?redirect=${to.path}`)
     } else {
-      next()
+      if (!store.getters.userinfo || !store.getters.userinfo.username) {
+        store.dispatch('GetInfo').then(async () => {
+          next()
+        }).catch(() => {
+          store.dispatch('LogOut').then(() => {
+            window.location.reload()
+          })
+        })
+      } else {
+        next()
+      }
     }
   }
 })

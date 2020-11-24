@@ -1,9 +1,10 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { login, getInfo } from '@/api/user'
+// import { login, getInfo } from '@/api/user'
+import { login, getInfo } from '@/mock/user'
 const user = {
   state: {
     token: getToken(),
-    userinfo: {}
+    userinfo: ''
   },
 
   mutations: {

@@ -19,9 +19,15 @@ import store from './store'
 import '@/filters' // filters
 import '@/permission' // permission 权限
 import api from '@/api'
+import { mockApi } from '@/mock'
 
+if (process.env.NODE_ENV === 'production') {
+  Vue.prototype.$api = api
+} else {
+  Vue.prototype.$api = mockApi
+  console.log(mockApi)
+}
 Vue.use(xtUi)
-Vue.prototype.$api = api
 Vue.config.productionTip = false
 
 new Vue({

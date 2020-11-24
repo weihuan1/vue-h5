@@ -6,8 +6,9 @@
       ref="select1"
       title="多选"
       :options="options"
-      multiple
       collapse-tags
+      mode="cell"
+      multiple
       v-model="selectValue"
     )
     van-cell(title="选择时间" is-link :value="time" @click="$refs.dataPicker.show(time)")
@@ -47,11 +48,12 @@ export default {
   },
   data () {
     return {
-      isSelectorShow: true,
+      isSelectorShow: false,
       time: '',
       selectValue: '',
       fileList: [],
       options: [
+        { label: '全部', value: 'all' },
         { label: '选项一', value: '111' },
         { label: '选项二', value: '222' },
         { label: '选项三', value: '333' },

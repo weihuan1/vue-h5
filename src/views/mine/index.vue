@@ -13,7 +13,7 @@
           .name {{ token ? userinfo.name : '欢迎回来' }}
           .content
             .grade(v-if="token") 会员等级
-              span.num LV{{ userinfo.grade || 1 }}
+              span.num LV{{ userinfo.lavel || 1 }}
             .tips(v-else @click="$router.push(`/login?redirect=${$route.path}`)") 未登录
       .header_items
         .header_item

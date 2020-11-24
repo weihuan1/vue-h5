@@ -1,6 +1,6 @@
 <template>
   <div class="xt-select">
-    <van-cell :title="title" v-bind="$attrs" :is-link="!readonly" @click="clickHandle">
+    <van-cell :title="title" v-if="mode === 'cell'" v-bind="$attrs" :is-link="!readonly" @click="clickHandle">
       <div class="value_wrap" v-if="multiple">
         <div class="value_list van-hairline--surround"
           v-for="(list, index) in selectLabel"
@@ -11,16 +11,14 @@
       </div>
       <div class="value_wrap" v-else>{{ selectLabel }}</div>
     </van-cell>
+    <van-button v-else class="select_button" :hairline="false" @click="clickHandle">{{ selectLabel }} <van-icon style="top:2px" name="arrow-down" /></van-button>
     <van-popup
       v-model="showPopup"
-      custom-style="height: 40%"
       get-container="body"
       position="bottom"
-      closeable
-      round
     >
-      <div class="popup_main" :style="{paddingBottom: showFooter ? '50px' : '0' }">
-        <div class="title">{{ title }}</div>
+      <div class="popup_main" :style="{paddingBottom: '50px' }">
+        <div class="title van-hairline--bottom">{{ title }}</div>
         <div class="popup_content">
           <div class="empty_tips" v-if="options.length === 0">暂无数据!</div>
           <div class="popop_list"
@@ -30,9 +28,9 @@
             @click="ckeckHandle(list)"
           >{{ list.label }}</div>
         </div>
-        <div class="filter_footer" v-show="showFooter">
-          <div class="button cancle van-hairline--top" @click="showPopup = false">取消</div>
-          <div class="button confirm" @click="showPopup = false">确定</div>
+        <div class="filter_footer" :style="{ borderTop: multiple ? '' : '6px solid #e9e9eb' }">
+          <div class="button cancle" :class="multiple ? 'van-hairline--top' : ''" @click="showPopup = false">取消</div>
+          <div class="button confirm" v-if="multiple" @click="showPopup = false">确定</div>
         </div>
       </div>
     </van-popup>
@@ -55,6 +53,10 @@ export default {
       type: Array,
       required: true
     },
+    mode: {
+      type: String,
+      default: 'cell'
+    },
     multiple: {
       type: Boolean,
       default: false
@@ -64,10 +66,6 @@ export default {
       default: false
     },
     collapseTags: {
-      type: Boolean,
-      default: false
-    },
-    showFooter: {
       type: Boolean,
       default: false
     }
@@ -129,6 +127,7 @@ export default {
 
 <style scoped lang="scss">
 .xt-select{
+  text-align: center;
   .value_wrap{
     display: flex;
     flex-wrap: nowrap;
@@ -147,6 +146,13 @@ export default {
       }
     }
   }
+  .van-cell{
+    text-align: left;
+  }
+  .select_button{
+    border: none;
+    background: transparent;
+  }
 }
 .popup_main{
   height: 100%;
@@ -155,11 +161,15 @@ export default {
     padding: 15px;
     font-size: 18px;
     color: #333333;
+    text-align: center;
   }
   .popup_content{
     display: flex;
     flex-wrap: wrap;
     min-height: 100px;
+    max-height: 400px;
+    padding: 5px 15px 20px 5px;
+    overflow-y: auto;
   }
   .filter_footer{
     display: flex;
@@ -173,10 +183,10 @@ export default {
       height: 50px;
       text-align: center;
       line-height: 50px;
-      font-size: 17px;
+      font-size: 15px;
       flex: 1;
       &.cancle{
-        color: #2878FF;
+        color: #444;
         background-color: #fff;
       }
       &.confirm{
@@ -192,19 +202,20 @@ export default {
     background-color: #fff;
   }
   .popop_list{
-    font-size: 11px;
+    font-size: 14px;
     border-radius: 4px;
     background-color: #F8F8F8;
-    margin: 10px 10px 0 10px;
+    margin: 10px 0 0 10px;
     display: inline-block;
-    height: 22px;
+    height: 54PX;
+    width: calc(33vw - 16px);
     display: flex;
     padding: 0 10px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     color: #727272;
     &.active{
-      background-color: #006EE9;
+      background-color: #50b56a;
       color: #fff;
     }
   }

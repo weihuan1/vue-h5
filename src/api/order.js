@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // // api
 // const { common_api } = api
 
-// 登录
+// 订单列表
 export function getOrderList (params) {
   return request({
     url: '/order/list',
@@ -11,7 +11,7 @@ export function getOrderList (params) {
     params
   })
 }
-// 获取用户信息
+// 订单详情
 export function getOrderDetail (id) {
   return request({
     url: `/order/${id}`,

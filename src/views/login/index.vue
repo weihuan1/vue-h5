@@ -66,8 +66,8 @@ export default {
   name: 'login',
   data () {
     return {
-      username: '',
-      password: '',
+      username: 'username',
+      password: 'password',
       phone: '',
       identCode: '',
       showPassword: false,
