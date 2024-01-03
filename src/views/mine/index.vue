@@ -33,6 +33,7 @@
         van-cell(title="URL 跳转" is-link)
         van-cell(title="单元格" value="内容" is-link)
       van-cell.mar_t(title="其他List" is-link)
+      img(src="@/assets/images/mine/qqdocs.png", alt="")
       .card_wrap
         xt-card.mar_t(v-for="(item, index) in listData" @click="clickHandle" :key="index" :length="item.length" :data="item")
 </template>
@@ -111,7 +112,7 @@ export default {
     padding:  30px 20px 10px;
     color: #fff;
     overflow: hidden;
-    background: url('../../assets/images/indexbg.jpg') no-repeat top center;
+    background: url('../../assets/images/mine/indexbg.jpg') no-repeat top center;
     background-size: 100%;
     .header_content{
       display: flex;

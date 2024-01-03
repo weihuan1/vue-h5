@@ -35,6 +35,11 @@
       @confirm="onSelectorConfirm"
       is-check
     )
+    img(
+      src="@/assets/images/home/pc-feture.jpg"
+      alt=""
+      class="feture"
+    )
     .empty_tips 暂无数据!
 </template>
 
@@ -122,5 +127,9 @@ export default {
 
 </script>
 <style lang='scss' scoped>
-.home{}
+.home{
+  .feture{
+    width: 100%;
+  }
+}
 </style>

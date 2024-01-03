@@ -56,6 +56,8 @@
           span 未注册手机，将自动为您创建一个**账户
     .insert_wrap
       van-divider 使用合作账号登录
+      //- img(src="@/assets/images/login/qq.png", alt="")
+      img(src="../../assets/images/login/qq.png", alt="")
       .icon_main
         span.iconfont.iconQQ
         span.iconfont.iconwechat
@@ -139,7 +141,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: url('../../assets/images/login_bg.jpg') no-repeat top center;
+  background: url('../../assets/images/login/login_bg.jpg') no-repeat top center;
   background-size: 100%;
   background-color: #fff;
   ::v-deep .van-tabs__nav{
