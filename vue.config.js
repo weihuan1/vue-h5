@@ -1,6 +1,8 @@
 'use strict'
 const path = require('path')
 const pxtorem = require('postcss-pxtorem')
+const ImageminWebP = require('imagemin-webp')
+const ImageminPlugin = require('imagemin-webpack-plugin').default
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
@@ -32,11 +34,11 @@ module.exports = {
     }
   },
 
-  configureWebpack: config => {
-    // 为生产环境修改配置...
-    // if (process.env.NODE_ENV === 'production') {}
-    // 为开发环境修改配置...
-    // if (process.env.NODE_ENV === 'development') {}
+  configureWebpack: {
+    plugins: [new ImageminPlugin({
+        // imagemin-webp docs: https://github.com/imagemin/imagemin-webp
+        plugins: [ImageminWebP({ quality: 50 })]
+    })]
   },
   chainWebpack (config) {
     // 单独配置mand-mobile 组件库pxtorem处理
