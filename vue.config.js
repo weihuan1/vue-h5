@@ -1,8 +1,7 @@
 'use strict'
 const path = require('path')
 const pxtorem = require('postcss-pxtorem')
-const ImageminWebP = require('imagemin-webp')
-const ImageminPlugin = require('imagemin-webpack-plugin').default
+const CopyPlugin = require("copy-webpack-plugin");
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
@@ -35,10 +34,16 @@ module.exports = {
   },
 
   configureWebpack: {
-    plugins: [new ImageminPlugin({
-        // imagemin-webp docs: https://github.com/imagemin/imagemin-webp
-        plugins: [ImageminWebP({ quality: 50 })]
-    })]
+    plugins: [
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, './cache-webp'),
+            to: path.resolve(__dirname, './dist/cache-webp')
+          },
+        ],
+      }),
+    ],
   },
   chainWebpack (config) {
     // 单独配置mand-mobile 组件库pxtorem处理
