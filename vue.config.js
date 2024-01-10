@@ -2,20 +2,23 @@
 const path = require('path')
 const pxtorem = require('postcss-pxtorem')
 const CopyPlugin = require("copy-webpack-plugin");
+const loaderUtils = require('loader-utils')
+const fs = require('fs-extra');
+const { webpConfig, getPath, getHashJson } = require('./build/webp.js')
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
-console.log(process.env.NODE_ENV)
+
 const port = 8080 // dev port
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/app/', // 需要区分生产环境和开发环境，不然build会报错
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : './', // 需要区分生产环境和开发环境，不然build会报错
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: false,
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,
+    open: false,
     overlay: {
       warnings: false,
       errors: true
@@ -42,10 +45,42 @@ module.exports = {
             to: path.resolve(__dirname, './dist/cache-webp')
           },
         ],
-      }),
+      })
     ],
   },
   chainWebpack (config) {
+    config.module
+      .rule('images')
+      .test(webpConfig.rule)
+      .use('url-loader')
+      .loader('url-loader')
+      .options({
+        limit: 0,
+        emitFile: false,
+        publicPath: (url, resource, context) => {
+          const hashJson = getHashJson()
+          const entryPath = getPath(webpConfig.entry)
+          const outputPath = getPath(webpConfig.output)
+          const contextPath = getPath(context)
+          const resourcePath = getPath(loaderUtils.urlToRequest(resource))
+          const resourceExtname = resourcePath.replace(path.extname(resourcePath), '')
+          const hash = hashJson[resourcePath]
+          const newSource = resourceExtname.replace(entryPath, outputPath)
+          const resultSource = `${newSource.replace(contextPath, '')}.${hash}.webp`
+          // console.log({
+          //   url,
+          //   hash,
+          //   resourceExtname,
+          //   newSource,
+          //   entryPath,
+          //   outputPath,
+          //   contextPath,
+          //   resultSource,
+          //   hashJson
+          // })
+          return resultSource
+        },
+      })
     // 单独配置mand-mobile 组件库pxtorem处理
     config.module
       .rule('md-postcss')  // 新增规则，规则名自定义

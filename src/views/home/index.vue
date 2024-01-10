@@ -40,6 +40,7 @@
       alt=""
       class="feture"
     )
+    .bg
     .empty_tips 暂无数据!
 </template>
 
@@ -130,6 +131,11 @@ export default {
 .home{
   .feture{
     width: 100%;
+  }
+  .bg{
+    height: 200px;
+    background: url('../../assets/images/home/pc-feture.png') no-repeat;
+    background-size: contain;
   }
 }
 </style>

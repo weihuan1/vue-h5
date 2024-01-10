@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node webp.js && vue-cli-service serve",
-    "build": "node webp.js && vue-cli-service build",
+    "dev": "node build/run-webp.js && vue-cli-service serve",
+    "build": "node build/run-webp.js && vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint"
   },
@@ -43,6 +43,7 @@
     "pug-plain-loader": "^1.0.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
+    "string-replace-webpack-plugin": "^0.1.3",
     "vue-template-compiler": "^2.6.10"
   }
 }

@@ -5,6 +5,13 @@ const crypto = require('node:crypto');
 const imagemin = require('imagemin');
 const imageminWebp = require('imagemin-webp');
 
+const webpConfig = {
+  entry: path.resolve(__dirname, '../src/assets/images'),
+  output: path.resolve(__dirname, '../cache-webp'),
+  hashPath: path.resolve(__dirname, '../cache-webp/hash.json'),
+  rule: /\.(png|jpe?g|gif|webp)$/
+}
+
 // 获取文件hash
 const getFileHash = (localPath) => {
   const fsHash = crypto.createHash('md5');
@@ -17,11 +24,10 @@ const getFileHash = (localPath) => {
 
 /**
  * 获取/生成并获取hash.json文件
- * @param filePath
  * @returns {any}
  */
-const getHashJson = (filePath) => {
-  const hashPath = filePath + '/hash.json'
+const getHashJson = () => {
+  const hashPath = webpConfig.hashPath
   const isHashJson = fs.pathExistsSync(hashPath)
   const initJson = { };
   if (!isHashJson) {
@@ -31,11 +37,19 @@ const getHashJson = (filePath) => {
   const hashJson = fs.readJsonSync(hashPath);
   return hashJson
 }
+/**
+ * 获取绝对路径兼容Linux与Windows
+ * @param filePath
+ */
+function getPath (filePath) {
+  return filePath.split(path.sep).join('/')
+}
 
-
-const webp = async (entryPath, outputPath = './cache-webp') => {
-  const imageDataList = glob.sync(`${entryPath}/**/*.@(jpg|png|jpeg)`);
-  const hashJson = getHashJson(outputPath)
+async function webp () {
+  const entryPath = getPath(webpConfig.entry)
+  const outputPath = getPath(webpConfig.output)
+  const imageDataList = glob.sync(`${entryPath}/**/*.@(png|jpg|jpeg|gif|webp)`);
+  const hashJson = getHashJson()
   const allLength = imageDataList.length
   const createImgHashJson = {}
   // 文件名称检查
@@ -55,6 +69,9 @@ const webp = async (entryPath, outputPath = './cache-webp') => {
     }
   })
   const createImgArr = Object.keys(createImgHashJson)
+  console.log('总文件数:' + allLength)
+  console.log('待生成文件数:' + createImgArr.length)
+  console.time('webp图片转换耗时')
   if (createImgArr.length > 0) {
     const res = await imagemin(createImgArr, {
       plugins: [
@@ -62,15 +79,14 @@ const webp = async (entryPath, outputPath = './cache-webp') => {
       ]
     })
     createImgArr.map((path, index) => {
-      const outputImgPath = path.replace(entryPath, outputPath).replace(/(.png)|(.jpg)|(.jpeg)/, '.' + createImgHashJson[path] + '.webp')
+      const outputImgPath = path.replace(entryPath, outputPath).replace(webpConfig.rule, '.' + createImgHashJson[path] + '.webp')
       fs.ensureFileSync(outputImgPath)
       fs.writeFileSync(outputImgPath, res[index].data)
     })
-    fs.writeJsonSync(outputPath + '/hash.json', Object.assign(hashJson, createImgHashJson), { spaces: 2 })
+    console.timeEnd('webp图片转换耗时')
+    fs.writeJsonSync(webpConfig.hashPath, Object.assign(hashJson, createImgHashJson), { spaces: 2 })
   }
-  
-  console.log('总文件数:' + allLength)
-  console.log('待生成文件数:' + createImgArr.length)
 }
-
-webp('./src/assets/images')
+module.exports = {
+  webpConfig, getFileHash, getHashJson, getPath, webp
+}
