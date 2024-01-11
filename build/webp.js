@@ -6,6 +6,7 @@ const imagemin = require('imagemin');
 const imageminWebp = require('imagemin-webp');
 
 const webpConfig = {
+  rootPath: path.resolve(__dirname, '../src'),
   entry: path.resolve(__dirname, '../src/assets/images'),
   output: path.resolve(__dirname, '../cache-webp'),
   hashPath: path.resolve(__dirname, '../cache-webp/hash.json'),
@@ -46,6 +47,7 @@ function getPath (filePath) {
 }
 
 async function webp () {
+  const rootePath = getPath(webpConfig.rootPath)
   const entryPath = getPath(webpConfig.entry)
   const outputPath = getPath(webpConfig.output)
   const imageDataList = glob.sync(`${entryPath}/**/*.@(png|jpg|jpeg|gif|webp)`);
@@ -63,9 +65,10 @@ async function webp () {
   }
   imageDataList.map(path => {
     const fileHash = getFileHash(path)
+    const filePath = path.replace(rootePath, '')
     // 判断hash存在或者文件有变更
-    if (!hashJson[path] || hashJson[path] !== fileHash) {
-      createImgHashJson[path] = fileHash
+    if (!hashJson[filePath] || hashJson[filePath] !== fileHash) {
+      createImgHashJson[filePath] = fileHash
     }
   })
   const createImgArr = Object.keys(createImgHashJson)
@@ -73,13 +76,14 @@ async function webp () {
   console.log('待生成文件数:' + createImgArr.length)
   console.time('webp图片转换耗时')
   if (createImgArr.length > 0) {
-    const res = await imagemin(createImgArr, {
+    const res = await imagemin(createImgArr.map(item => path.join(rootePath, item)), {
       plugins: [
         imageminWebp({ quality: 50 })
       ]
     })
-    createImgArr.map((path, index) => {
-      const outputImgPath = path.replace(entryPath, outputPath).replace(webpConfig.rule, '.' + createImgHashJson[path] + '.webp')
+    createImgArr.map((imgPath, index) => {
+      const filePath = getPath(path.join(rootePath, imgPath))
+      const outputImgPath = filePath.replace(entryPath, outputPath).replace(webpConfig.rule, '.' + createImgHashJson[imgPath] + '.webp')
       fs.ensureFileSync(outputImgPath)
       fs.writeFileSync(outputImgPath, res[index].data)
     })

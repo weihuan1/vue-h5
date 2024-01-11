@@ -59,12 +59,14 @@ module.exports = {
         emitFile: false,
         publicPath: (url, resource, context) => {
           const hashJson = getHashJson()
+          const rootePath = getPath(webpConfig.rootPath)
           const entryPath = getPath(webpConfig.entry)
           const outputPath = getPath(webpConfig.output)
           const contextPath = getPath(context)
           const resourcePath = getPath(loaderUtils.urlToRequest(resource))
           const resourceExtname = resourcePath.replace(path.extname(resourcePath), '')
-          const hash = hashJson[resourcePath]
+          const hashPath = resourcePath.replace(rootePath, '')
+          const hash = hashJson[hashPath]
           const newSource = resourceExtname.replace(entryPath, outputPath)
           const resultSource = `${newSource.replace(contextPath, '')}.${hash}.webp`
           // console.log({
